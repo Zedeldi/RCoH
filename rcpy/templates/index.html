@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Desktop | {{ rcserver.get("hostname") }}</title>
+    <script>
+      rcserver = {{ rcserver | tojson }}
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+  </head>
+  <body>
+    <p id="status"></p>
+    <img id="display" src="">
+  </body>
+</html>
