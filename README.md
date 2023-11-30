@@ -54,6 +54,12 @@ After cloning the repository with: `git clone https://github.com/Zedeldi/RCoH.gi
 1. Install dependencies: `pip install -r requirements.txt`
 2. Run: `python -m rcoh [host] [port]`
 
+### PyInstaller
+
+The server application can be bundled with [PyInstaller](https://pyinstaller.org), by adding the required static files and templates for Flask to the bundle.
+
+`pyinstaller --name "rcoh-server" --add-data "rcoh/static:static" --add-data "rcoh/templates:templates" rcoh/server.py`
+
 Libraries:
 
 - [Flask](https://pypi.org/project/Flask/) - web application
