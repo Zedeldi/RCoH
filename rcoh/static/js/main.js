@@ -64,7 +64,7 @@ function getRelativeXY(clientX, clientY, target) {
     return [x, y];
 }
 
-document.addEventListener("keypress", function(event) {
+document.addEventListener("keydown", function(event) {
     keypress(event.key, event.keyCode);
     event.preventDefault();
 });

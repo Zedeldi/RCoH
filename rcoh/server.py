@@ -10,6 +10,7 @@ from flask import Flask, abort, render_template, request, url_for
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = 8080
 IMAGE_FORMAT = "JPEG"
+KEY_STRIP_PREFIXES = ["arrow"]
 
 
 app = Flask(__name__)
@@ -46,10 +47,15 @@ def display() -> str:
 @app.route("/keypress")
 def keypress() -> dict:
     """Type specified keys."""
-    key, keycode = request.args.get("key"), request.args.get("keyCode")
+    key, keycode = (
+        request.args.get("key").lower(),
+        request.args.get("keyCode", type=int),
+    )
     if not key:
         return abort(400)
-    pyautogui.write(key)
+    for prefix in KEY_STRIP_PREFIXES:
+        key = key.removeprefix(prefix)
+    pyautogui.press(key)
     return {"key": key, "keyCode": keycode}
 
 
