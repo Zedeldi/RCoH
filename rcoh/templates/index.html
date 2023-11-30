@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remote Control | {{ rcserver.get("hostname") }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script>
       rcserver = {{ rcserver | tojson }}
     </script>
@@ -15,5 +16,6 @@
     <input type="number" id="fps" name="fps" min="1" max="60">
     <hr>
     <img id="display" src="">
+    <img id="pause" src="{{ url_for('static', filename='img/pause.svg') }}">
   </body>
 </html>

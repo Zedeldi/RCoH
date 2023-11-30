@@ -1,0 +1,18 @@
+img {
+  transition: 1s ease;
+}
+
+#pause {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}

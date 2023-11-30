@@ -4,6 +4,7 @@ const DEFAULT_FPS = 4;
 
 const display = document.getElementById("display");
 const status = document.getElementById("status");
+const pause = document.getElementById("pause");
 const fps = document.getElementById("fps");
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -25,14 +26,31 @@ function updateFrame() {
         })
         .then((frame) => {
             display.src = `data:image/${rcserver.imageFormat.toLowerCase()};base64,` + frame;
-            status.textContent = `\
-                Remote controlling: ${rcserver.hostname} \
-                | Image format: ${rcserver.imageFormat} \
-                | FPS: ${displayFps}`;
+            setStatus();
         })
         .catch((error) => {
-            status.textContent = `Could not fetch frame: ${error}`;
+            setStatus(error);
         });
+}
+
+function setStatus(error = null) {
+    let statusText = [`Remote controlling: ${rcserver.hostname}`];
+    if (error) {
+        display.classList.add("grayscale");
+        pause.style.visibility = "visible";
+        pause.style.opacity = 1;
+        statusText.push("Status: paused", error);
+    } else {
+        display.classList.remove("grayscale");
+        pause.style.visibility = "hidden";
+        pause.style.opacity = 0;
+        statusText.push(
+            "Status: running",
+            `Image format: ${rcserver.imageFormat}`,
+            `FPS: ${displayFps}`
+        );
+    }
+    status.textContent = statusText.join(" | ");
 }
 
 function startDisplay() {
