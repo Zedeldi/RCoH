@@ -42,9 +42,17 @@ If other remote desktop protocols, such as RDP or VNC, are unavailable, RCoH sho
 
 ## Installation
 
-1. Clone: `git clone https://github.com/Zedeldi/RCoH.git`
-2. Install dependencies: `pip3 install -r requirements.txt`
-3. Run: `python3 -m rcoh [host] [port]`
+After cloning the repository with: `git clone https://github.com/Zedeldi/RCoH.git`
+
+### Build
+
+1. Install project: `pip install .`
+2. Run: `rcoh-server [host] [port]`
+
+### Development
+
+1. Install dependencies: `pip install -r requirements.txt`
+2. Run: `python -m rcoh [host] [port]`
 
 Libraries:
 

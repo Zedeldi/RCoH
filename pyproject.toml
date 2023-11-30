@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RCoH"
+description = "Remote Control over HTTP (RCoH)."
+version = "1.0.0"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Zack Didcott"}
+]
+maintainers = [
+  {name = "Zack Didcott"}
+]
+dependencies = [
+  "Flask",
+  "pyautogui"
+]
+requires-python = ">= 3.9"
+
+[project.urls]
+Homepage = "https://github.com/Zedeldi/RCoH"
+
+[project.scripts]
+rcoh-server = "rcoh.__main__:main"
+
+[tool.black]
+line-length = 79
