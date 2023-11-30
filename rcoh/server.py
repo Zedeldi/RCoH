@@ -7,6 +7,8 @@ from io import BytesIO
 import pyautogui
 from flask import Flask, abort, render_template, request, url_for
 
+DEFAULT_HOST = "0.0.0.0"
+DEFAULT_PORT = 8080
 IMAGE_FORMAT = "JPEG"
 
 
@@ -62,4 +64,4 @@ def click() -> dict:
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", 8080)
+    app.run(DEFAULT_HOST, DEFAULT_PORT)
