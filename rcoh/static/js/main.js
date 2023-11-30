@@ -23,22 +23,43 @@ function updateFrame() {
         });
 }
 
-document.addEventListener("keypress", function(event) {
+function keypress(key, keyCode) {
     fetch(rcserver.keypressUrl + "?" + new URLSearchParams({
-        key: event.key,
-        keyCode: event.keyCode
+        key: key,
+        keyCode: keyCode
     }));
+}
+
+function click(x, y, button = "left") {
+    fetch(rcserver.clickUrl + "?" + new URLSearchParams({
+        x: x,
+        y: y,
+        button: button
+    }));
+}
+
+function getRelativeXY(clientX, clientY, target) {
+    const rect = target.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    return [x, y];
+}
+
+document.addEventListener("keypress", function(event) {
+    keypress(event.key, event.keyCode);
     event.preventDefault();
 });
 
 document.getElementById("display").onclick = function(event) {
-    const rect = event.target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    fetch(rcserver.clickUrl + "?" + new URLSearchParams({
-        x: x,
-        y: y
-    }))
+    [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
+    click(x, y);
+    event.preventDefault();
+}
+
+document.getElementById("display").oncontextmenu = function(event) {
+    [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
+    click(x, y, "right");
+    event.preventDefault();
 }
 
 setInterval(updateFrame, 1000 / displayFps);

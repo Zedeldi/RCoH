@@ -50,17 +50,16 @@ def keypress() -> dict:
     if not key:
         return abort(400)
     pyautogui.write(key)
-    res = {"key": key, "keyCode": keycode}
-    return res
+    return {"key": key, "keyCode": keycode}
 
 
 @app.route("/click")
 def click() -> dict:
     """Click specified at specified co-ordinates."""
     x, y = request.args.get("x", type=int), request.args.get("y", type=int)
-    pyautogui.click(x=x, y=y)
-    res = {"position": pyautogui.position()}
-    return res
+    button = request.args.get("button", "left")
+    pyautogui.click(x=x, y=y, button=button)
+    return {"position": pyautogui.position(), "button": button}
 
 
 if __name__ == "__main__":
