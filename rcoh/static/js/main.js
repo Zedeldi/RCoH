@@ -1,9 +1,21 @@
-const searchParams = new URLSearchParams(window.location.search)
-const displayFps = searchParams.get("fps") || 4
+"use strict";
+
+const DEFAULT_FPS = 4;
+
+const display = document.getElementById("display");
+const status = document.getElementById("status");
+const fps = document.getElementById("fps");
+
+const searchParams = new URLSearchParams(window.location.search);
+let displayFps = searchParams.get("fps") || DEFAULT_FPS;
+if (displayFps < Number(fps.min) || displayFps > Number(fps.max)) {
+    displayFps = DEFAULT_FPS;
+}
+fps.value = displayFps;
+
+let displayId = null;
 
 function updateFrame() {
-    const display = document.getElementById("display");
-    const status = document.getElementById("status");
     fetch(rcserver.displayUrl)
         .then((response) => {
             if (!response.ok) {
@@ -21,6 +33,13 @@ function updateFrame() {
         .catch((error) => {
             status.textContent = `Could not fetch frame: ${error}`;
         });
+}
+
+function startDisplay() {
+    if (displayId) {
+        clearInterval(displayId);
+    }
+    displayId = setInterval(updateFrame, 1000 / displayFps);
 }
 
 function keypress(key, keyCode) {
@@ -50,16 +69,21 @@ document.addEventListener("keypress", function(event) {
     event.preventDefault();
 });
 
-document.getElementById("display").onclick = function(event) {
-    [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
+display.onclick = function(event) {
+    const [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
     click(x, y);
     event.preventDefault();
-}
+};
 
-document.getElementById("display").oncontextmenu = function(event) {
-    [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
+display.oncontextmenu = function(event) {
+    const [x, y] = getRelativeXY(event.clientX, event.clientY, event.target);
     click(x, y, "right");
     event.preventDefault();
-}
+};
 
-setInterval(updateFrame, 1000 / displayFps);
+fps.onchange = function(event) {
+    displayFps = this.value;
+    startDisplay();
+};
+
+startDisplay();
