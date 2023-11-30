@@ -83,6 +83,9 @@ function getRelativeXY(clientX, clientY, target) {
 }
 
 document.addEventListener("keydown", function(event) {
+    if (event.target.tagName.toLowerCase() === "input") {
+        return;
+    }
     keypress(event.key, event.keyCode);
     event.preventDefault();
 });

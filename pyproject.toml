@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "RCoH"
 description = "Remote Control over HTTP (RCoH)."
-version = "1.0.0"
+version = "1.0.1"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
